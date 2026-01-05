@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <BeamsBackground />
-        {children}
+        <div className="app-enter">{children}</div>
       </body>
     </html>
   );

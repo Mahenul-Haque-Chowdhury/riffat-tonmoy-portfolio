@@ -13,6 +13,7 @@ import {
   Mail,
   Phone,
 } from "lucide-react";
+import SmoothScrollLink from "@/components/SmoothScrollLink";
 
 export default function Home() {
   const skills = [
@@ -45,6 +46,14 @@ export default function Home() {
       href: "https://www.flickr.com/photos/riffattonmoy/",
       Icon: Camera,
     },
+  ];
+
+  const navLinks = [
+    { label: "Ventures", href: "#ventures" },
+    { label: "Experience", href: "#experience" },
+    { label: "Education", href: "#education" },
+    { label: "Skills", href: "#skills" },
+    { label: "Contact", href: "#contact" },
   ];
 
   const experience = [
@@ -98,18 +107,31 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-white/50 dark:bg-zinc-950/35 text-zinc-900 dark:text-zinc-100 selection:bg-blue-600 selection:text-white">
+    <div
+      id="top"
+      className="min-h-screen bg-white/50 dark:bg-zinc-950/35 text-zinc-900 dark:text-zinc-100 selection:bg-blue-600 selection:text-white"
+    >
       
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-white/55 dark:bg-zinc-950/35 backdrop-blur-md border-b border-zinc-200/70 dark:border-zinc-800/70">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-bold text-xl tracking-tighter">Riffat Tonmoy</span>
-          <div className="flex gap-6 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-            <Link href="#ventures" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Ventures</Link>
-            <Link href="#experience" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Experience</Link>
-            <Link href="#education" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Education</Link>
-            <Link href="#skills" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Skills</Link>
-            <Link href="#contact" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Contact</Link>
+          <Link
+            href="/"
+            className="font-bold text-xl tracking-tighter hover:opacity-80 transition-opacity"
+            aria-label="Go to homepage"
+          >
+            Riffat Tonmoy
+          </Link>
+          <div className="hidden sm:flex gap-6 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            {navLinks.map((item) => (
+              <SmoothScrollLink
+                key={item.label}
+                href={item.href}
+                className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+              >
+                {item.label}
+              </SmoothScrollLink>
+            ))}
           </div>
         </div>
       </nav>
@@ -357,11 +379,27 @@ export default function Home() {
           </div>
 
           <div className="mt-10 text-center text-xs text-zinc-400">
-            &copy; {new Date().getFullYear()} Riffat Tonmoy. All rights reserved.
+            &copy; {new Date().getFullYear()} Riffat Tonmoy. All rights reserved. Developed by{" "}
+            <a
+              href="https://grayvally.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 underline underline-offset-4"
+            >
+              GrayVally Software Solutions
+            </a>
+            .
           </div>
         </section>
 
       </main>
+
+      <SmoothScrollLink
+        href="#top"
+        className="fixed bottom-5 right-5 z-50 rounded-full border border-zinc-200/70 dark:border-zinc-800/70 bg-white/70 dark:bg-zinc-950/50 backdrop-blur-sm px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:bg-white/85 dark:hover:bg-zinc-950/70 transition-colors"
+      >
+        Back to top
+      </SmoothScrollLink>
     </div>
   );
 }
