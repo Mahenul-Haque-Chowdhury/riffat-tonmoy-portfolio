@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -14,8 +16,10 @@ import {
   Phone,
 } from "lucide-react";
 import SmoothScrollLink from "@/components/SmoothScrollLink";
+import { useState } from "react";
 
 export default function Home() {
+  const [isNavOpen, setIsNavOpen] = useState(false);
   const skills = [
     "Content Writing & Captioning",
     "Social Media Strategy & Publishing",
@@ -95,7 +99,6 @@ export default function Home() {
       details: [
         "Major in Literature",
         "Second Major: Marketing Management",
-        "Final CGPA: 3.62",
       ],
     },
     {
@@ -133,8 +136,36 @@ export default function Home() {
               </SmoothScrollLink>
             ))}
           </div>
+          <button
+            type="button"
+            className="sm:hidden inline-flex flex-col gap-1.5 rounded-full border border-zinc-200/70 dark:border-zinc-800/70 bg-white/80 dark:bg-zinc-900/80 p-2 backdrop-blur transition-opacity hover:opacity-80"
+            aria-label="Toggle navigation"
+            aria-expanded={isNavOpen}
+            onClick={() => setIsNavOpen((prev) => !prev)}
+          >
+            <span className="h-0.5 w-6 bg-zinc-900 dark:bg-zinc-100"></span>
+            <span className="h-0.5 w-6 bg-zinc-900 dark:bg-zinc-100"></span>
+            <span className="h-0.5 w-6 bg-zinc-900 dark:bg-zinc-100"></span>
+          </button>
         </div>
       </nav>
+
+      {isNavOpen && (
+        <div className="fixed inset-x-4 top-20 z-40 rounded-2xl border border-zinc-200/70 dark:border-zinc-800/70 bg-white/90 dark:bg-zinc-950/70 p-6 shadow-2xl backdrop-blur-xl sm:hidden">
+          <div className="flex flex-col gap-4 text-lg text-zinc-900 dark:text-zinc-100">
+            {navLinks.map((item) => (
+              <SmoothScrollLink
+                key={item.label}
+                href={item.href}
+                onClick={() => setIsNavOpen(false)}
+                className="block font-semibold hover:text-blue-600 dark:hover:text-cyan-400"
+              >
+                {item.label}
+              </SmoothScrollLink>
+            ))}
+          </div>
+        </div>
+      )}
 
       <main className="max-w-5xl mx-auto px-6 pt-32 pb-20">
         
