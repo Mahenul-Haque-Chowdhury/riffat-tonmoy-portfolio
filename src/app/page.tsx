@@ -16,10 +16,21 @@ import {
   Phone,
 } from "lucide-react";
 import SmoothScrollLink from "@/components/SmoothScrollLink";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 40);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const skills = [
     "Content Writing & Captioning",
     "Social Media Strategy & Publishing",
@@ -67,6 +78,19 @@ export default function Home() {
       period: "Present",
       bullets: [
         "Leading operations, branding, and customer experience for a premium auto detailing studio.",
+      ],
+    },
+    {
+      role: "Head of Business",
+      company: (
+        <a href="https://grayvally.tech" target="_blank" rel="noopener noreferrer" className="font-semibold text-zinc-900 dark:text-zinc-100 hover:text-blue-600">
+          GrayVally Software Solutions
+        </a>
+      ),
+      period: "Jan 2026 — Present",
+      bullets: [
+        "Overseeing business strategy, growth, and client relations for a dynamic software solutions company.",
+        "Driving innovation and leading teams to deliver impactful digital products and services.",
       ],
     },
     {
@@ -283,8 +307,12 @@ export default function Home() {
                       {item.company}
                     </p>
                   </div>
-                  <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                    {item.period}
+                  <p className="text-sm font-medium">
+                    {typeof item.period === 'string' && item.period.includes('Present') ? (
+                      <span className="text-green-600 dark:text-green-400">{item.period}</span>
+                    ) : (
+                      <span className="text-zinc-500 dark:text-zinc-400">{item.period}</span>
+                    )}
                   </p>
                 </div>
 
@@ -427,7 +455,11 @@ export default function Home() {
 
       <SmoothScrollLink
         href="#top"
-        className="fixed bottom-5 right-5 z-50 rounded-full border border-zinc-200/70 dark:border-zinc-800/70 bg-white/70 dark:bg-zinc-950/50 backdrop-blur-sm px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:bg-white/85 dark:hover:bg-zinc-950/70 transition-colors"
+        className={`fixed bottom-5 right-5 z-50 rounded-full border border-zinc-200/70 dark:border-zinc-800/70 bg-white/70 dark:bg-zinc-950/50 backdrop-blur-sm px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:bg-white/85 dark:hover:bg-zinc-950/70 transition-all duration-300 ${
+          showBackToTop
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-4 pointer-events-none"
+        }`}
       >
         Back to top
       </SmoothScrollLink>
